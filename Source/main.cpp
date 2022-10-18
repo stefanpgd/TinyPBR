@@ -1,8 +1,7 @@
-#include <iostream>
-#include <glad/glad.h>
-#include <glfw3.h>
+#include "Renderer.h"
 
 int main()
 {
-
+	Renderer renderer;
+	renderer.Run();
 }
