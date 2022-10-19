@@ -8,6 +8,7 @@
 #include "Model.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <chrono>
 
 static void GLFWErrorCallback(int error, const char* description)
 {
@@ -49,12 +50,18 @@ void Renderer::Run()
 {
 	Setup();
 
-	model = new Model("Resources/Models/Helmet/Helmet.gltf");
+	static float deltaTime = 0.0f;
+	static std::chrono::high_resolution_clock clock;
+	static auto t0 = std::chrono::time_point_cast<std::chrono::milliseconds>((clock.now())).time_since_epoch();
 
 	while (isRunning)
 	{
+		auto t1 = std::chrono::time_point_cast<std::chrono::milliseconds>((clock.now())).time_since_epoch();
+		deltaTime = (t1 - t0).count() * .001;
+		t0 = t1;
+
 		StartFrame();
-		Update();
+		Update(deltaTime);
 		Draw();
 
 		glfwSwapBuffers(window);
@@ -76,8 +83,10 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
+	model = new Model("Resources/Models/Helmet/Helmet.gltf");
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
+
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -92,10 +101,10 @@ void Renderer::StartFrame()
 	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::Update()
+void Renderer::Update(float deltaTime)
 {
 	ProcessInput(window);
-	camera->Update(0.0f);
+	camera->Update(window, deltaTime);
 	camera->DebugDrawImGui();
 	model->DebugDrawImGui();
 }

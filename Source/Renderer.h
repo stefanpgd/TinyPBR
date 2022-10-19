@@ -25,7 +25,7 @@ private:
 
 	void Setup();
 	void StartFrame();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void ProcessInput(GLFWwindow* window);

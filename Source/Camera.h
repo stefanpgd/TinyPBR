@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <GLFW/glfw3.h>
 
 class Camera
 {
@@ -7,14 +8,15 @@ public:
 	Camera() = delete;
 	Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, float windowWidth, float windowHeight);
 
-	void Update(float deltaTime);
+	void Update(GLFWwindow* window, float deltaTime);
 	void DebugDrawImGui();
 
 	glm::mat4& GetViewProjectionMatrix();
 	glm::vec3& GetPosition();
 
 private:
-	void ProcessInput(float deltaTime);
+	void ProcessInput(GLFWwindow* window, float deltaTime);
+	void ProcessMouse(GLFWwindow* window, float deltaTime);
 
 	glm::vec3 position;
 	glm::vec3 front;
@@ -26,6 +28,8 @@ private:
 
 	float windowWidth;
 	float windowHeight;
+
+	float cameraMovespeed = 5.0f;
 
 	float FOV = 45.0f;
 	float yaw = -90.0f;
