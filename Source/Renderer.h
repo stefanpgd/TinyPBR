@@ -15,9 +15,12 @@ private:
 	unsigned int screenWidth = 1080;
 	unsigned int screenHeight = 720;
 
+	unsigned int VAO;
+	unsigned int shaderprogram;
+
 	void StartFrame();
 	void Update();
-	void Render();
+	void Draw();
 
 	void ProcessInput(GLFWwindow* window);
 };
