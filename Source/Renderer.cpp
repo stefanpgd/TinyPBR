@@ -4,6 +4,9 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include "ShaderProgram.h"
+#include "Camera.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 static void GLFWErrorCallback(int error, const char* description)
 {
@@ -20,7 +23,7 @@ Renderer::Renderer()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(screenWidth, screenHeight, "TinyPBR", NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, "TinyPBR", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	//glfwSwapInterval(1); // Enable vsync
 
@@ -31,7 +34,7 @@ Renderer::Renderer()
 		return;
 	}
 
-	glViewport(0, 0, screenWidth, screenHeight);
+	glViewport(0, 0, windowWidth, windowHeight);
 
 	// Initialize ImGui // 
 	IMGUI_CHECKVERSION();
@@ -43,7 +46,35 @@ Renderer::Renderer()
 
 void Renderer::Run()
 {
+	Setup();
+
+	while (isRunning)
+	{
+		StartFrame();
+		Update();
+		Draw();
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+
+		if (glfwWindowShouldClose(window))
+		{
+			isRunning = false;
+		}
+	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	glfwDestroyWindow(window);
+	glfwTerminate();
+}
+
+void Renderer::Setup()
+{
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -74,27 +105,7 @@ void Renderer::Run()
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
-	while (isRunning)
-	{
-		StartFrame();
-		Update();
-		Draw();
-
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-
-		if (glfwWindowShouldClose(window))
-		{
-			isRunning = false;
-		}
-	}
-
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
-
-	glfwDestroyWindow(window);
-	glfwTerminate();
+	glEnable(GL_DEPTH);
 }
 
 void Renderer::StartFrame()
@@ -105,17 +116,23 @@ void Renderer::StartFrame()
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::Update()
 {
 	ProcessInput(window);
-	ImGui::ShowDemoWindow();
+	camera->Update(0.0f);
+	camera->DebugDrawImGui();
 }
 
 void Renderer::Draw()
 {
+	glm::mat4 model(1.0f);
+
 	shaderProgram->Bind();
+	shaderProgram->SetMat4("ModelMatrix", model);
+	shaderProgram->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
 	glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 

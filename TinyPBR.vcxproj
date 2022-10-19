@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Dependencies\GLAD\include\glad\glad.c" />
     <ClCompile Include="Dependencies\ImGui\imgui.cpp" />
     <ClCompile Include="Dependencies\ImGui\imgui_demo.cpp" />
@@ -159,6 +160,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Dependencies\ImGui\imconfig.h" />
     <ClInclude Include="Dependencies\ImGui\imgui.h" />
     <ClInclude Include="Dependencies\ImGui\imgui_impl_glfw.h" />

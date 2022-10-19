@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 class ShaderProgram;
+class Camera;
 
 class Renderer
 {
@@ -14,12 +15,14 @@ public:
 private:
 	bool isRunning = true;
 	GLFWwindow* window;
-	unsigned int screenWidth = 1080;
-	unsigned int screenHeight = 720;
+	unsigned int windowWidth = 1080;
+	unsigned int windowHeight = 720;
 
+	Camera* camera;
 	ShaderProgram* shaderProgram;
 	unsigned int VAO;
 
+	void Setup();
 	void StartFrame();
 	void Update();
 	void Draw();

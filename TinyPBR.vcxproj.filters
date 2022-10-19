@@ -48,6 +48,9 @@
     <ClCompile Include="Source\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll" />
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
