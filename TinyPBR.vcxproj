@@ -195,6 +195,8 @@
     <ClInclude Include="Source\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Source\Shaders\pbr.frag" />
+    <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\triangle.frag" />
     <None Include="Source\Shaders\triangle.vert" />
   </ItemGroup>

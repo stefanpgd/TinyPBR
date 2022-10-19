@@ -33,7 +33,16 @@ Mesh::Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string mo
 	indexData.clear();
 
 	int albedoID = model->materials[primitive.material].pbrMetallicRoughness.baseColorTexture.index;
+	int normalID = model->materials[primitive.material].normalTexture.index;
+	int metallicRoughnessID = model->materials[primitive.material].pbrMetallicRoughness.metallicRoughnessTexture.index;
+	int ambientOcculusionID = model->materials[primitive.material].occlusionTexture.index;
+	int emissiveID = model->materials[primitive.material].emissiveTexture.index;
+
 	LoadTexture(model, modelPath, TextureType::Albedo, albedoID);
+	LoadTexture(model, modelPath, TextureType::Normal, normalID);
+	LoadTexture(model, modelPath, TextureType::MetalicRoughness, metallicRoughnessID);
+	LoadTexture(model, modelPath, TextureType::AmbientOcclusion, ambientOcculusionID);
+	LoadTexture(model, modelPath, TextureType::Emissive, emissiveID);
 }
 
 void Mesh::Draw(const ShaderProgram* shaderProgram)

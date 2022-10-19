@@ -36,9 +36,9 @@ Model::Model(const std::string& filePath)
 
 void Model::Draw(const Camera* camera, const ShaderProgram* shaderProgram)
 {
-	rotation.x += 0.5f;
-	rotation.y += 0.2f;
-	rotation.z += 0.15f;
+	//rotation.x += 0.5f;
+	//rotation.y += 0.2f;
+	//rotation.z += 0.15f;
 
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, position);
