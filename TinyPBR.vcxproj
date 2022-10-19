@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -141,8 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\GLAD\include\glad\glad.c" />
     <ClCompile Include="Source\Renderer.cpp" />
-    <ClCompile Include="Source\glad.c" />
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>

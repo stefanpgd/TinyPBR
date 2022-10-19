@@ -38,7 +38,6 @@ void Renderer::Run()
 		glClearColor(0.1f, 0.4f, 0.25f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 

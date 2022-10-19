@@ -18,10 +18,10 @@
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\glad.c">
+    <ClCompile Include="Source\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer.cpp">
+    <ClCompile Include="Dependencies\GLAD\include\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
