@@ -53,7 +53,7 @@ void Model::Draw(const Camera* camera, const ShaderProgram* shaderProgram)
 	shaderProgram->SetMat4("ModelMatrix", model);
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i]->Draw();
+		meshes[i]->Draw(shaderProgram);
 	}
 }
 

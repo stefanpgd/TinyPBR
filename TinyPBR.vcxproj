@@ -166,6 +166,7 @@
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll">
@@ -191,6 +192,7 @@
     <ClInclude Include="Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Renderer.h" />
+    <ClInclude Include="Source\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\triangle.frag" />

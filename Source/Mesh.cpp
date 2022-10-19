@@ -1,6 +1,8 @@
 #include "Mesh.h"
 #include <cassert>
 #include <glad/glad.h>
+#include "Texture.h"
+#include "ShaderProgram.h"
 
 static std::vector<std::string> g_MeshAttributes
 {
@@ -29,10 +31,18 @@ Mesh::Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string mo
 	// Clean up vertex/index memory // 
 	vertexData.clear();
 	indexData.clear();
+
+	int albedoID = model->materials[primitive.material].pbrMetallicRoughness.baseColorTexture.index;
+	LoadTexture(model, modelPath, TextureType::Albedo, albedoID);
 }
 
-void Mesh::Draw()
+void Mesh::Draw(const ShaderProgram* shaderProgram)
 {
+	for (int i = 0; i < textures.size(); i++)
+	{
+		textures[i]->Bind(shaderProgram);
+	}
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
 }
@@ -146,4 +156,23 @@ void Mesh::SetupMesh()
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)(sizeof(float) * 8));
 
 	glBindVertexArray(0);
+}
+
+void Mesh::LoadTexture(tinygltf::Model* model, std::string modelPath, TextureType type, int textureID)
+{
+	Texture* texture;
+	if (textureID != -1)
+	{
+		int image = model->textures[textureID].source;
+		std::string textureFile = model->images[image].uri;
+		std::string dir = modelPath.substr(0, modelPath.find_last_of("/") + 1);
+		std::string path = dir + textureFile;
+
+		texture = new Texture(path, type);
+		textures.push_back(texture);
+	}
+	else
+	{
+		printf("Warning: Model doesn't contain this type of texture!");
+	}
 }

@@ -4,6 +4,10 @@
 #include <vector>
 #include <string>
 
+class Texture;
+class ShaderProgram;
+enum class TextureType;
+
 struct VertexData
 {
 	glm::vec3 Position;
@@ -16,8 +20,7 @@ class Mesh
 {
 public:
 	Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath);
-
-	void Draw();
+	void Draw(const ShaderProgram* shaderProgram);
 
 private:
 	void GetVertices(tinygltf::Model* model, tinygltf::Primitive& primitive);
@@ -25,9 +28,11 @@ private:
 	void ParseModelData(tinygltf::Accessor& accessor, tinygltf::BufferView& bufferView, tinygltf::Buffer& buffer, const std::string& type);
 
 	void SetupMesh();
+	void LoadTexture(tinygltf::Model* model, std::string modelPath, TextureType type, int textureID);
 
 	std::vector<VertexData> vertexData;
 	std::vector<unsigned int> indexData;
+	std::vector<Texture*> textures;
 
 	unsigned int VBO, VAO, EBO;
 	unsigned int indicesCount;
