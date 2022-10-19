@@ -4,6 +4,7 @@
 
 class ShaderProgram;
 class Camera;
+class Model;
 
 class Renderer
 {
@@ -20,7 +21,7 @@ private:
 
 	Camera* camera;
 	ShaderProgram* shaderProgram;
-	unsigned int VAO;
+	Model* model;
 
 	void Setup();
 	void StartFrame();

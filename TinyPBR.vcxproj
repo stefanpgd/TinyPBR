@@ -73,14 +73,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\STB;$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\STB;$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,6 +124,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -139,8 +145,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\TinyglTF\tiny_gltf.cc" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Dependencies\GLAD\include\glad\glad.c" />
     <ClCompile Include="Dependencies\ImGui\imgui.cpp" />
@@ -160,6 +173,12 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\STB\stb_image.h" />
+    <ClInclude Include="Dependencies\STB\stb_image_write.h" />
+    <ClInclude Include="Dependencies\TinyglTF\json.hpp" />
+    <ClInclude Include="Dependencies\TinyglTF\tiny_gltf.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Dependencies\ImGui\imconfig.h" />
     <ClInclude Include="Dependencies\ImGui\imgui.h" />
