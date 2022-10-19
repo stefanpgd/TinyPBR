@@ -1,4 +1,4 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -60,4 +60,5 @@ void Camera::ProcessInput(GLFWwindow* window, float deltaTime)
 
 void Camera::ProcessMouse(GLFWwindow* window, float deltaTime)
 {
+
 }

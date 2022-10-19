@@ -1,4 +1,4 @@
-#include "Renderer.h"
+﻿#include "Renderer.h"
 #include <iostream>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <chrono>
+#include <stb_image_write.h>
 
 static void GLFWErrorCallback(int error, const char* description)
 {
@@ -125,4 +126,32 @@ void Renderer::ProcessInput(GLFWwindow* window)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
+
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		TakeScreenshot("Resources/Screenshots/githubScreenshot.png");
+	}
+}
+
+void Renderer::TakeScreenshot(std::string filePath)
+{
+	// Idea inspired by Matěj Kaločai
+	// Code by Lencerf Walk
+	// Credits: https://lencerf.github.io/post/2019-09-21-save-the-opengl-rendering-to-image-file/
+
+	int width;
+	int height;
+	glfwGetFramebufferSize(window, &width, &height);
+	GLsizei nrChannels = 3;
+	GLsizei stride = nrChannels * width;
+	stride += (stride % 4) ? (4 - stride % 4) : 0;
+	GLsizei bufferSize = stride * height;
+
+	std::vector<char> buffer(bufferSize);
+	glPixelStorei(GL_PACK_ALIGNMENT, 4);
+	glReadBuffer(GL_FRONT);
+	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
+
+	stbi_flip_vertically_on_write(true);
+	stbi_write_png(filePath.c_str(), width, height, nrChannels, buffer.data(), stride);
 }

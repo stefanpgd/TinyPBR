@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -29,4 +30,5 @@ private:
 	void Draw();
 
 	void ProcessInput(GLFWwindow* window);
+	void TakeScreenshot(std::string filePath);
 };
