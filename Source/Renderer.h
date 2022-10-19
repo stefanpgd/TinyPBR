@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 class Renderer
 {
@@ -15,7 +15,7 @@ private:
 	unsigned int screenWidth = 1080;
 	unsigned int screenHeight = 720;
 
-	void Setup();
+	void StartFrame();
 	void Update();
 	void Render();
 
