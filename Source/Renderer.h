@@ -2,6 +2,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+class ShaderProgram;
+
 class Renderer
 {
 public:
@@ -15,8 +17,8 @@ private:
 	unsigned int screenWidth = 1080;
 	unsigned int screenHeight = 720;
 
+	ShaderProgram* shaderProgram;
 	unsigned int VAO;
-	unsigned int shaderprogram;
 
 	void StartFrame();
 	void Update();

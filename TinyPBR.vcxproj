@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\Bin\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\TinyglTF;$(SolutionDir)Dependencies\GLAD\include;$(SolutionDir)Dependencies\ImGui;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\GLFW\include</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -151,6 +151,7 @@
     <ClCompile Include="Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll">
@@ -167,7 +168,12 @@
     <ClInclude Include="Dependencies\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Renderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Shaders\triangle.frag" />
+    <None Include="Source\Shaders\triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
