@@ -18,4 +18,6 @@ private:
 	void Setup();
 	void Update();
 	void Render();
+
+	void ProcessInput(GLFWwindow* window);
 };
