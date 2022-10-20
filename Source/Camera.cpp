@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, float windowWidth, float windowHeight) :
-	position(position), front(front), up(up)
+	position(position), front(front), up(up), windowWidth(windowWidth), windowHeight(windowHeight)
 {
 	viewMatrix = glm::lookAt(position, position + front, up);
 	projectionMatrix = glm::perspective(glm::radians(FOV), windowWidth / windowHeight, nearClip, farClip);
