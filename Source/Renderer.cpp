@@ -84,7 +84,7 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
-	model = new Model("Resources/Models/Helmet/Helmet.gltf");
+	model = new Model("Resources/Models/TestChildNodes/test.gltf");
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 

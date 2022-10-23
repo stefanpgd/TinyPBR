@@ -21,7 +21,7 @@ Model::Model(const std::string& filePath)
 		{
 			for (int j = 0; j < model->meshes[i].primitives.size(); j++)
 			{
-				meshes.push_back(new Mesh(model, model->meshes[i].primitives[j], filePath));
+				meshes.push_back(new Mesh(model, model->meshes[i].primitives[j], filePath, i));
 			}
 		}
 	}
@@ -50,10 +50,9 @@ void Model::Draw(const Camera* camera, const ShaderProgram* shaderProgram)
 
 	model = glm::scale(model, scale);
 
-	shaderProgram->SetMat4("ModelMatrix", model);
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i]->Draw(shaderProgram);
+		meshes[i]->Draw(shaderProgram, model);
 	}
 }
 

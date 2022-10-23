@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include "Texture.h"
 #include "ShaderProgram.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 static std::vector<std::string> g_MeshAttributes
 {
@@ -12,7 +13,7 @@ static std::vector<std::string> g_MeshAttributes
 	"TANGENT",
 };
 
-Mesh::Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath)
+Mesh::Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath, int index)
 {
 	tinygltf::Accessor& accessor = model->accessors[primitive.indices];
 	tinygltf::BufferView& bufferView = model->bufferViews[accessor.bufferView];
@@ -43,10 +44,42 @@ Mesh::Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string mo
 	LoadTexture(model, modelPath, TextureType::MetalicRoughness, metallicRoughnessID);
 	LoadTexture(model, modelPath, TextureType::AmbientOcclusion, ambientOcculusionID);
 	LoadTexture(model, modelPath, TextureType::Emissive, emissiveID);
+
+	glm::vec3 pos;
+	glm::vec3 rot;
+	glm::vec3 scl { 1.0f, 1.0f, 1.0f};
+
+	if (model->nodes[index].translation.size() > 0)
+	{
+		auto p = model->nodes[index].translation;
+		pos = glm::vec3(p[0], p[1], p[2]);
+	}
+
+	if (model->nodes[index].rotation.size() > 0)
+	{
+		auto r = model->nodes[index].rotation;
+		rot = glm::vec3(r[0], r[1], r[2]);
+	}
+
+	if (model->nodes[index].scale.size() > 0)
+	{
+		auto s = model->nodes[index].scale;
+		scl = glm::vec3(s[0], s[1], s[2]);
+	}
+
+	local = glm::mat4(1.0f);
+	local = glm::translate(local, pos);
+	local = glm::rotate(local, glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
+	local = glm::rotate(local, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
+	local = glm::rotate(local, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	local = glm::scale(local, scl);
 }
 
-void Mesh::Draw(const ShaderProgram* shaderProgram)
+void Mesh::Draw(const ShaderProgram* shaderProgram, glm::mat4& parentTransform)
 {
+	glm::mat4 model = parentTransform * local;
+	shaderProgram->SetMat4("ModelMatrix", model);
+
 	for (int i = 0; i < textures.size(); i++)
 	{
 		textures[i]->Bind(shaderProgram);

@@ -6,6 +6,13 @@ class Mesh;
 class Camera;
 class ShaderProgram;
 
+struct MeshNode
+{
+	glm::mat4 localTransform;
+	std::vector<MeshNode> children;
+	int meshIndex;
+};
+
 class Model
 {
 public:
@@ -17,6 +24,8 @@ public:
 
 private:
 	std::vector<Mesh*> meshes;
+	std::vector<MeshNode> nodes;
+
 	glm::mat4 model; // replace with transform component;
 
 	glm::vec3 position;
