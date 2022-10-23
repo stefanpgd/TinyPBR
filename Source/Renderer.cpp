@@ -84,7 +84,7 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
-	model = new Model("Resources/Models/TestChildNodes/test.gltf");
+	model = new Model("Resources/Models/SciFiHelmet/SciFiHelmet.gltf");
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
@@ -107,14 +107,14 @@ void Renderer::Update(float deltaTime)
 	ProcessInput(window);
 	camera->Update(window, deltaTime);
 	camera->DebugDrawImGui();
-	model->DebugDrawImGui();
+	//model->DebugDrawImGui();
 }
 
 void Renderer::Draw()
 {
 	shaderProgram->Bind();
 	shaderProgram->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
-	model->Draw(camera, shaderProgram);
+	model->Draw(shaderProgram);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

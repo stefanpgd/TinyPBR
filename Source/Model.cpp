@@ -1,66 +1,109 @@
 #include "Model.h"
-#include <tiny_gltf.h>
-#include <iostream>
+
 #include <cassert>
-#include <imgui.h>
-#include "Mesh.h"
-#include "ShaderProgram.h"
+#include <tiny_gltf.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-Model::Model(const std::string& filePath)
+#include "Mesh.h"
+#include "ShaderProgram.h"
+
+Model::Model(std::string file)
 {
-	tinygltf::Model* model = new tinygltf::Model();
+	tinygltf::Model model;
 	tinygltf::TinyGLTF modelLoader;
 
 	std::string warning;
 	std::string error;
 
-	if (modelLoader.LoadASCIIFromFile(model, &error, &warning, filePath))
+	bool loadedModel = modelLoader.LoadASCIIFromFile(&model, &error, &warning, file);
+
+	if (!warning.empty() || !error.empty())
 	{
-		for (int i = 0; i < model->meshes.size(); i++)
+		printf("TinyglTF Warning: %s.\n", warning.c_str());
+		printf("TinyglTF Error: %s!\n", error.c_str());
+	}
+
+	if (!loadedModel)
+	{
+		assert(false && "Failed to load glTF model");
+	}
+
+	for (auto& mesh : model.meshes)
+	{
+		for (auto& primitive : mesh.primitives)
 		{
-			for (int j = 0; j < model->meshes[i].primitives.size(); j++)
-			{
-				meshes.push_back(new Mesh(model, model->meshes[i].primitives[j], filePath, i));
-			}
+			meshes.push_back(new Mesh(&model, primitive, file));
 		}
 	}
-	else
+
+	for (int i = 0; i < model.scenes[model.defaultScene].nodes.size(); i++)
 	{
-		printf(warning.c_str());
-		printf(error.c_str());
-		assert(false && "Failed to load model!");
-		return;
+		sceneRootNodes.push_back(model.scenes[model.defaultScene].nodes[i]);
+	}
+
+	// Retrieve the (local-)transform data per Node // 
+	nodes.resize(model.nodes.size());
+	for (int i = 0; i < model.nodes.size(); i++)
+	{
+		for (int j = 0; j < model.nodes[i].children.size(); j++)
+		{
+			nodes[i].Children.push_back(model.nodes[i].children[j]);
+		}
+
+		nodes[i].MeshID = model.nodes[i].mesh;
+
+		auto transform = model.nodes[i];
+		glm::vec3 position(0.0f, 0.0f, 0.0f);
+		glm::vec3 rotation(0.0f, 0.0f, 0.0f);
+		glm::vec3 scale(1.0f, 1.0f, 1.0f);
+
+		if (transform.translation.size() > 0)
+		{
+			position = glm::vec3(transform.translation[0], transform.translation[1], transform.translation[2]);
+		}
+
+		if (transform.rotation.size() > 0)
+		{
+			rotation = glm::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
+		}
+
+		if (transform.scale.size() > 0)
+		{
+			scale = glm::vec3(transform.scale[0], transform.scale[1], transform.scale[2]);
+		}
+
+		auto& model = nodes[i].LocalTransform;
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, position);
+		model = glm::rotate(model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, scale);
 	}
 }
 
-void Model::Draw(const Camera* camera, const ShaderProgram* shaderProgram)
+void Model::Draw(const ShaderProgram* shaderProgram)
 {
-	//rotation.x += 0.5f;
-	//rotation.y += 0.2f;
-	//rotation.z += 0.15f;
-
-	glm::mat4 model(1.0f);
-	model = glm::translate(model, position);
-
-	// Temp
-	model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-	model = glm::scale(model, scale);
-
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	for (int i = 0; i < sceneRootNodes.size(); i++)
 	{
-		meshes[i]->Draw(shaderProgram, model);
+		glm::mat4 model = glm::mat4(1.0f);
+		DrawSceneNode(shaderProgram, sceneRootNodes[i], model);
 	}
 }
 
-void Model::DebugDrawImGui()
+void Model::DrawSceneNode(const ShaderProgram* shaderProgram, int nodeIndex, glm::mat4& parentTransform)
 {
-	ImGui::Begin("Model Settings");
-	ImGui::DragFloat3("Position", &position[0], 0.01f);
-	ImGui::DragFloat3("Rotation", &rotation[0], 1.0f);
-	ImGui::DragFloat3("Scale", &scale[0], 0.01f);
-	ImGui::End();
+	auto& node = nodes[nodeIndex];
+
+	if (node.MeshID > -1)
+	{
+		glm::mat4 model = node.LocalTransform * parentTransform;
+		shaderProgram->SetMat4("ModelMatrix", model);
+		meshes[node.MeshID]->Draw(shaderProgram);
+
+		for (int i = 0; i < node.Children.size(); i++)
+		{
+			DrawSceneNode(shaderProgram, node.Children[i], model);
+		}
+	}
 }

@@ -152,8 +152,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\TinyglTF\tiny_gltf.cc" />
-    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Dependencies\GLAD\include\glad\glad.c" />
     <ClCompile Include="Dependencies\ImGui\imgui.cpp" />
@@ -178,8 +178,8 @@
     <ClInclude Include="Dependencies\STB\stb_image_write.h" />
     <ClInclude Include="Dependencies\TinyglTF\json.hpp" />
     <ClInclude Include="Dependencies\TinyglTF\tiny_gltf.h" />
-    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Model.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Dependencies\ImGui\imconfig.h" />
     <ClInclude Include="Dependencies\ImGui\imgui.h" />

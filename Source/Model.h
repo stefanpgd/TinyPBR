@@ -2,33 +2,29 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+
 class Mesh;
-class Camera;
 class ShaderProgram;
 
 struct MeshNode
 {
-	glm::mat4 localTransform;
-	std::vector<MeshNode> children;
-	int meshIndex;
+	int MeshID = -1;
+	glm::mat4 LocalTransform;
+	std::vector<unsigned int> Children;
 };
 
 class Model
 {
 public:
 	Model() = delete;
-	Model(const std::string& filePath);
+	Model(std::string file);
 
-	void Draw(const Camera* camera, const ShaderProgram* shaderProgram);
-	void DebugDrawImGui();
+	void Draw(const ShaderProgram* shaderProgram);
 
 private:
+	void DrawSceneNode(const ShaderProgram* shaderProgram, int nodeIndex, glm::mat4& parentTransform);
+
 	std::vector<Mesh*> meshes;
 	std::vector<MeshNode> nodes;
-
-	glm::mat4 model; // replace with transform component;
-
-	glm::vec3 position;
-	glm::vec3 rotation;
-	glm::vec3 scale{1.0f, 1.0f, 1.0f};
+	std::vector<unsigned int> sceneRootNodes;
 };

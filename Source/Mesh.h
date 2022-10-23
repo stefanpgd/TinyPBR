@@ -19,8 +19,8 @@ struct VertexData
 class Mesh
 {
 public:
-	Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath, int index);
-	void Draw(const ShaderProgram* shaderProgram, glm::mat4& parentTransform);
+	Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath);
+	void Draw(const ShaderProgram* shaderProgram);
 
 private:
 	void GetVertices(tinygltf::Model* model, tinygltf::Primitive& primitive);
