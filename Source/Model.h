@@ -18,7 +18,7 @@ class Model
 {
 public:
 	Model() = delete;
-	Model(std::string file);
+	Model(std::string file, bool hasTextures = true);
 
 	void Draw(const ShaderProgram* shaderProgram);
 

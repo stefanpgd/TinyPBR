@@ -7,7 +7,7 @@
 #include "Mesh.h"
 #include "ShaderProgram.h"
 
-Model::Model(std::string file)
+Model::Model(std::string file, bool hasTextures)
 {
 	tinygltf::Model model;
 	tinygltf::TinyGLTF modelLoader;
@@ -33,7 +33,7 @@ Model::Model(std::string file)
 		std::vector<Mesh*> prims;
 		for (auto& primitive : mesh.primitives)
 		{
-			prims.push_back(new Mesh(&model, primitive, file));
+			prims.push_back(new Mesh(&model, primitive, file, hasTextures));
 		}
 		meshes.push_back(prims);
 	}

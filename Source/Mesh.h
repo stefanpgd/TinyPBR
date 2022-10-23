@@ -19,7 +19,7 @@ struct VertexData
 class Mesh
 {
 public:
-	Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath);
+	Mesh(tinygltf::Model* model, tinygltf::Primitive primitive, std::string modelPath, bool hasTextures = true);
 	void Draw(const ShaderProgram* shaderProgram);
 
 private:

@@ -1,0 +1,112 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.8.19",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Sphere"
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Sphere.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TANGENT" : 2,
+                        "TEXCOORD_0" : 3
+                    },
+                    "indices" : 4
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 507904,
+            "max" : [
+                0.9872310161590576,
+                0.9975767135620117,
+                0.9872307181358337
+            ],
+            "min" : [
+                -0.9872304201126099,
+                -0.9975767135620117,
+                -0.9872304201126099
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 507904,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 507904,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 507904,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5125,
+            "count" : 761856,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 6094848,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 6094848,
+            "byteOffset" : 6094848
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 8126464,
+            "byteOffset" : 12189696
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4063232,
+            "byteOffset" : 20316160
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 3047424,
+            "byteOffset" : 24379392
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 27426816,
+            "uri" : "sphere.bin"
+        }
+    ]
+}
