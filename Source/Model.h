@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include "Transform.h"
 
 class Mesh;
 class ShaderProgram;
@@ -23,6 +24,8 @@ public:
 
 private:
 	void DrawSceneNode(const ShaderProgram* shaderProgram, int nodeIndex, glm::mat4& parentTransform);
+
+	Transform transform;
 
 	std::vector<Mesh*> meshes;
 	std::vector<MeshNode> nodes;

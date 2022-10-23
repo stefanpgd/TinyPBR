@@ -45,6 +45,14 @@ Renderer::Renderer()
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 460");
+	ImGuiIO& io = ImGui::GetIO();
+	io.FontDefault = io.Fonts->AddFontFromFileTTF("Resources/Fonts/OpenSans-Regular.ttf", 15.5f);
+	io.Fonts->AddFontFromFileTTF("Resources/Fonts/OpenSans-Bold.ttf", 15.5f);
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.FrameRounding = 2;
+	style.WindowRounding = 3;
+	style.WindowTitleAlign = ImVec2(0.5, 0.5);
 }
 
 void Renderer::Run()

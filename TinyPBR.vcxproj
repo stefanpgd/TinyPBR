@@ -167,6 +167,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll">
@@ -193,6 +194,7 @@
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\Renderer.h" />
     <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\pbr.frag" />

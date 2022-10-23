@@ -84,10 +84,11 @@ Model::Model(std::string file)
 
 void Model::Draw(const ShaderProgram* shaderProgram)
 {
+	transform.DebugDrawImGui();
+
 	for (int i = 0; i < sceneRootNodes.size(); i++)
 	{
-		glm::mat4 model = glm::mat4(1.0f);
-		DrawSceneNode(shaderProgram, sceneRootNodes[i], model);
+		DrawSceneNode(shaderProgram, sceneRootNodes[i], transform.GetModelMatrix());
 	}
 }
 
