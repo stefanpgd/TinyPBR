@@ -14,8 +14,8 @@ void main()
 {
    vec4 diffuseTex = texture(texture_diffuse, TextureCoord);
    vec4 mr = texture(texture_mr, TextureCoord);
-   
-   vec4 ao = texture(texture_ao, TextureCoord);
+   float ao = texture(texture_ao, TextureCoord).r;
 
+   diffuseTex *= ao;
    FragColor = vec4(diffuseTex.rgb, 1.0);
 }

@@ -30,10 +30,12 @@ Model::Model(std::string file)
 
 	for (auto& mesh : model.meshes)
 	{
+		std::vector<Mesh*> prims;
 		for (auto& primitive : mesh.primitives)
 		{
-			meshes.push_back(new Mesh(&model, primitive, file));
+			prims.push_back(new Mesh(&model, primitive, file));
 		}
+		meshes.push_back(prims);
 	}
 
 	for (int i = 0; i < model.scenes[model.defaultScene].nodes.size(); i++)
@@ -98,9 +100,13 @@ void Model::DrawSceneNode(const ShaderProgram* shaderProgram, int nodeIndex, glm
 
 	if (node.MeshID > -1)
 	{
-		glm::mat4 model = node.LocalTransform * parentTransform;
+		glm::mat4 model = parentTransform * node.LocalTransform;
 		shaderProgram->SetMat4("ModelMatrix", model);
-		meshes[node.MeshID]->Draw(shaderProgram);
+
+		for (auto& mesh : meshes[node.MeshID])
+		{
+			mesh->Draw(shaderProgram);
+		}
 
 		for (int i = 0; i < node.Children.size(); i++)
 		{

@@ -27,7 +27,7 @@ private:
 
 	Transform transform;
 
-	std::vector<Mesh*> meshes;
+	std::vector<std::vector<Mesh*>> meshes;
 	std::vector<MeshNode> nodes;
 	std::vector<unsigned int> sceneRootNodes;
 };
