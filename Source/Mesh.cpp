@@ -1,14 +1,15 @@
-#include "AMesh.h"
+#include "Mesh.h"
+
 #include <glad/glad.h>
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
-AMesh::AMesh(aiMesh* mesh)
+Mesh::Mesh(aiMesh* mesh)
 {
 	vertexData.resize(mesh->mNumVertices);
 
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	for(unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		vertexData[i].Position.x = mesh->mVertices[i].x;
 		vertexData[i].Position.y = mesh->mVertices[i].y;
@@ -21,7 +22,7 @@ AMesh::AMesh(aiMesh* mesh)
 		vertexData[i].TextureCoord.x = mesh->mTextureCoords[0][i].x;
 		vertexData[i].TextureCoord.y = mesh->mTextureCoords[0][i].y;
 
-		if (mesh->mTangents != nullptr)
+		if(mesh->mTangents != nullptr)
 		{
 			vertexData[i].Tangent.x = mesh->mTangents[i].x;
 			vertexData[i].Tangent.y = mesh->mTangents[i].y;
@@ -29,9 +30,9 @@ AMesh::AMesh(aiMesh* mesh)
 		}
 	}
 
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	for(unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
-		for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
+		for(unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; j++)
 		{
 			indexData.push_back(mesh->mFaces[i].mIndices[j]);
 		}
@@ -43,13 +44,13 @@ AMesh::AMesh(aiMesh* mesh)
 	indexData.clear();
 }
 
-void AMesh::Draw(ShaderProgram* shaderProgram)
+void Mesh::Draw(ShaderProgram* shaderProgram)
 {
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
 }
 
-void AMesh::SetupBuffers()
+void Mesh::SetupBuffers()
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

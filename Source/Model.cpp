@@ -1,11 +1,13 @@
-#include "AModel.h"
+#include "Model.h"
+#include "Mesh.h"
+#include "ShaderProgram.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <cassert>
-#include "AMesh.h"
 
-AModel::AModel(const std::string& filePath)
+Model::Model(const std::string& filePath)
 {
 	Assimp::Importer import;
 	unsigned int processFlags =
@@ -31,7 +33,7 @@ AModel::AModel(const std::string& filePath)
 
 	const aiScene* scene = import.ReadFile(filePath, processFlags);
 
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		printf("Assimp Error: %s", (std::string)import.GetErrorString());
 		assert(false && "Failed to import model");
@@ -40,22 +42,27 @@ AModel::AModel(const std::string& filePath)
 	ProcessNode(scene->mRootNode, scene);
 }
 
-void AModel::Draw(ShaderProgram* shaderProgram)
+void Model::Draw(ShaderProgram* shaderProgram)
 {
+	shaderProgram->SetMat4("ModelMatrix", transform.GetModelMatrix());
 
+	for(unsigned int i = 0; i < meshes.size(); i++)
+	{
+		meshes[i]->Draw(shaderProgram);
+	}
 }
 
-void AModel::ProcessNode(aiNode* node, const aiScene* scene)
+void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	for(unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* meshData = scene->mMeshes[node->mMeshes[i]];
 
-		AMesh* newMesh = new AMesh(meshData);
+		Mesh* newMesh = new Mesh(meshData);
 		meshes.push_back(newMesh);
 	}
 
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	for(unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		ProcessNode(node->mChildren[i], scene);
 	}

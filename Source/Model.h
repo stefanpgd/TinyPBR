@@ -1,24 +1,28 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Transform.h"
 
 class ShaderProgram;
-class AMesh;
+class Mesh;
+
+// Assimp // 
 struct aiNode;
 struct aiMesh;
 struct aiScene;
 struct aiMaterial;
 enum aiTextureType;
 
-class AModel
+class Model
 {
 public:
-	AModel(const std::string& filePath);
+	Model(const std::string& filePath);
 	
 	void Draw(ShaderProgram* shaderProgram);
 
 private:
 	void ProcessNode(aiNode* node, const aiScene* scene);
 
-	std::vector<AMesh*> meshes;
+	Transform transform;
+	std::vector<Mesh*> meshes;
 };

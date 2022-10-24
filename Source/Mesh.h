@@ -14,10 +14,10 @@ struct VertexData
 	glm::vec3 Tangent;
 };
 
-class AMesh
+class Mesh
 {
 public:
-	AMesh(aiMesh* mesh);
+	Mesh(aiMesh* mesh);
 
 	void Draw(ShaderProgram* shaderProgram);
 

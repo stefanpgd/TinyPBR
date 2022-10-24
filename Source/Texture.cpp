@@ -9,8 +9,8 @@ Texture::Texture(std::string& filePath, TextureType type)
 	this->type = type;
 
 	buffer = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
-	
-	if (buffer == nullptr)
+
+	if(buffer == nullptr)
 	{
 		assert(false && "Failed to load texture.");
 	}

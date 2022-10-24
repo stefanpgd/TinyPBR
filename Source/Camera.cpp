@@ -23,8 +23,8 @@ void Camera::DebugDrawImGui()
 	ImGui::Begin("Camera Settings");
 	ImGui::DragFloat3("Position", &position[0], 0.01f);
 	ImGui::DragFloat("Movement Speed", &cameraMovespeed, 0.25f, 0.0f);
-	
-	if (ImGui::SliderFloat("FOV", &FOV, 0.0f, 90.0f))
+
+	if(ImGui::SliderFloat("FOV", &FOV, 0.0f, 90.0f))
 	{
 		projectionMatrix = glm::perspective(glm::radians(FOV), windowWidth / windowHeight, nearClip, farClip);
 	}
@@ -48,13 +48,13 @@ void Camera::ProcessInput(GLFWwindow* window, float deltaTime)
 {
 	float speed = cameraMovespeed * deltaTime;
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		position += speed * front;
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		position -= speed * front;
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		position -= glm::normalize(glm::cross(front, up)) * speed;
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		position += glm::normalize(glm::cross(front, up)) * speed;
 }
 

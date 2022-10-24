@@ -40,7 +40,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexName, const std::string& f
 		vertexCode = vShaderStream.str();
 		fragmentCode = fShaderStream.str();
 	}
-	catch (std::ifstream::failure& e)
+	catch(std::ifstream::failure& e)
 	{
 		throw std::runtime_error(e);
 	}
@@ -59,7 +59,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexName, const std::string& f
 
 	// Checker for errors
 	glGetShaderiv(vertexID, GL_COMPILE_STATUS, &success);
-	if (!success)
+	if(!success)
 	{
 		glGetShaderInfoLog(vertexID, 512, NULL, infoLog);
 		std::cout << "Error: shader vertex compilation failed: " << infoLog << std::endl;
@@ -71,7 +71,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexName, const std::string& f
 	glCompileShader(fragmentID);
 
 	glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &success);
-	if (!success)
+	if(!success)
 	{
 		glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
 		std::cout << "Error: shader vertex compilation failed: " << infoLog << std::endl;
@@ -84,7 +84,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexName, const std::string& f
 	glLinkProgram(shaderProgramID);
 
 	glGetProgramiv(shaderProgramID, GL_LINK_STATUS, &success);
-	if (!success)
+	if(!success)
 	{
 		glGetProgramInfoLog(shaderProgramID, 512, NULL, infoLog);
 		std::cout << "Error: Shader program linking failed: " << infoLog << std::endl;

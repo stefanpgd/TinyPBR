@@ -153,8 +153,8 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\STB\stb_image.cpp" />
     <ClCompile Include="Dependencies\STB\stb_image_write.cpp" />
-    <ClCompile Include="Source\AMesh.cpp" />
-    <ClCompile Include="Source\AModel.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Dependencies\GLAD\include\glad\glad.c" />
     <ClCompile Include="Dependencies\ImGui\imgui.cpp" />
@@ -176,8 +176,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AMesh.h" />
-    <ClInclude Include="Source\AModel.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Dependencies\STB\stb_image.h" />
     <ClInclude Include="Dependencies\STB\stb_image_write.h" />
     <ClInclude Include="Source\Camera.h" />

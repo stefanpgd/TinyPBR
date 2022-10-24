@@ -1,15 +1,18 @@
 ﻿#include "Renderer.h"
+#include "Model.h"
+#include "Camera.h"
+#include "ShaderProgram.h"
+
+#include <stb_image_write.h>
 #include <iostream>
+#include <chrono>
+
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include "ShaderProgram.h"
-#include "Camera.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <chrono>
-#include "AModel.h"
-#include <stb_image_write.h>
 
 static void GLFWErrorCallback(int error, const char* description)
 {
@@ -31,7 +34,7 @@ Renderer::Renderer()
 	//glfwSwapInterval(1); // Enable vsync
 
 	// Initialize GLAD // 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		printf("Error: Failed to initialize GLAD!\n");
 		return;
@@ -63,7 +66,7 @@ void Renderer::Run()
 	static std::chrono::high_resolution_clock clock;
 	static auto t0 = std::chrono::time_point_cast<std::chrono::milliseconds>((clock.now())).time_since_epoch();
 
-	while (isRunning)
+	while(isRunning)
 	{
 		auto t1 = std::chrono::time_point_cast<std::chrono::milliseconds>((clock.now())).time_since_epoch();
 		deltaTime = (t1 - t0).count() * .001;
@@ -76,7 +79,7 @@ void Renderer::Run()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		if (glfwWindowShouldClose(window))
+		if(glfwWindowShouldClose(window))
 		{
 			isRunning = false;
 		}
@@ -92,7 +95,7 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
-	model = new AModel("Resources/Models/Sphere/sphere.gltf");
+	model = new Model("Resources/Models/ChessGame/ABeautifulGame.gltf");
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
@@ -115,7 +118,6 @@ void Renderer::Update(float deltaTime)
 	ProcessInput(window);
 	camera->Update(window, deltaTime);
 	camera->DebugDrawImGui();
-	//model->DebugDrawImGui();
 }
 
 void Renderer::Draw()
@@ -131,12 +133,12 @@ void Renderer::Draw()
 
 void Renderer::ProcessInput(GLFWwindow* window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+	if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
 	{
 		TakeScreenshot("Resources/Screenshots/githubScreenshot.png");
 	}

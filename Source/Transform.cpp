@@ -101,7 +101,7 @@ void Transform::DrawVector3Edit(const std::string name, glm::vec3& data, float r
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.81f, 0.1f, 0.15f, 1.0f));
 
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("X", buttonSize))
+	if(ImGui::Button("X", buttonSize))
 	{
 		data.x = resetValue;
 	}
@@ -118,7 +118,7 @@ void Transform::DrawVector3Edit(const std::string name, glm::vec3& data, float r
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.7f, 0.2f, 1.0f));
 
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Y", buttonSize))
+	if(ImGui::Button("Y", buttonSize))
 	{
 		data.y = resetValue;
 	}
@@ -136,7 +136,7 @@ void Transform::DrawVector3Edit(const std::string name, glm::vec3& data, float r
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.25f, 0.8f, 1.0f));
 
 	ImGui::PushFont(boldFont);
-	if (ImGui::Button("Z", buttonSize))
+	if(ImGui::Button("Z", buttonSize))
 	{
 		data.z = resetValue;
 	}
