@@ -151,6 +151,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AMesh.cpp" />
+    <ClCompile Include="Source\AModel.cpp" />
     <ClCompile Include="Dependencies\TinyglTF\tiny_gltf.cc" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
@@ -175,6 +177,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AMesh.h" />
+    <ClInclude Include="Source\AModel.h" />
     <ClInclude Include="Dependencies\STB\stb_image.h" />
     <ClInclude Include="Dependencies\STB\stb_image_write.h" />
     <ClInclude Include="Dependencies\TinyglTF\json.hpp" />
@@ -197,6 +201,9 @@
     <ClInclude Include="Source\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="Dependencies\Assimp\lib\assimp-vc143-mt.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\triangle.frag" />

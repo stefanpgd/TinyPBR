@@ -5,7 +5,7 @@
 
 class ShaderProgram;
 class Camera;
-class Model;
+class AModel;
 
 class Renderer
 {
@@ -22,7 +22,7 @@ private:
 
 	Camera* camera;
 	ShaderProgram* shaderProgram;
-	Model* model;
+	AModel* model;
 
 	void Setup();
 	void StartFrame();

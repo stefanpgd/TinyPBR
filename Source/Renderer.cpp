@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <chrono>
 #include <stb_image_write.h>
+#include "AModel.h"
 
 static void GLFWErrorCallback(int error, const char* description)
 {
@@ -92,7 +93,7 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
-	model = new Model("Resources/Models/Sphere/Sphere.gltf", false);
+	model = new AModel("Resources/Models/brass_vase_03_4k.fbx");
 	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
