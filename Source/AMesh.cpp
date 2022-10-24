@@ -1,10 +1,13 @@
 #include "AMesh.h"
 #include <glad/glad.h>
 #include <assimp/scene.h>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
 
-AMesh::AMesh(const aiMesh* mesh, const aiScene* scene)
+AMesh::AMesh(aiMesh* mesh)
 {
 	vertexData.resize(mesh->mNumVertices);
+
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		vertexData[i].Position.x = mesh->mVertices[i].x;

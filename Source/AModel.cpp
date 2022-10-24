@@ -42,15 +42,16 @@ AModel::AModel(const std::string& filePath)
 
 void AModel::Draw(ShaderProgram* shaderProgram)
 {
+
 }
 
 void AModel::ProcessNode(aiNode* node, const aiScene* scene)
 {
-	for (unsigned int i = 0; i < i < node->mNumMeshes; i++)
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* meshData = scene->mMeshes[node->mMeshes[i]];
 
-		AMesh* newMesh = new AMesh(meshData, scene);
+		AMesh* newMesh = new AMesh(meshData);
 		meshes.push_back(newMesh);
 	}
 

@@ -17,7 +17,7 @@ struct VertexData
 class AMesh
 {
 public:
-	AMesh(const aiMesh* mesh, const aiScene* scene);
+	AMesh(aiMesh* mesh);
 
 	void Draw(ShaderProgram* shaderProgram);
 
