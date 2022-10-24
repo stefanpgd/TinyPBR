@@ -1,8 +1,8 @@
 #include "Texture.h"
-#include <stb_image.h>
 #include <cassert>
 #include <glad/glad.h>
 #include "ShaderProgram.h"
+#include <stb_image.h>
 
 Texture::Texture(std::string& filePath, TextureType type)
 {
