@@ -4,7 +4,7 @@
 #include "ShaderProgram.h"
 #include <stb_image.h>
 
-Texture::Texture(std::string& filePath, TextureType type)
+Texture::Texture(std::string& filePath, TextureType type, bool loadSRGB)
 {
 	this->type = type;
 
@@ -26,7 +26,17 @@ Texture::Texture(std::string& filePath, TextureType type)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	unsigned int format = channels == 3 ? GL_RGB : GL_RGBA;
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+	
+	if(loadSRGB)
+	{
+		unsigned int sRGBFormat = channels == 3 ? GL_SRGB : GL_SRGB_ALPHA;
+		glTexImage2D(GL_TEXTURE_2D, 0, sRGBFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+	}
+
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	stbi_image_free(buffer);

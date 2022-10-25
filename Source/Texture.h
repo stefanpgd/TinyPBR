@@ -15,7 +15,7 @@ enum class TextureType
 class Texture
 {
 public:
-	Texture(std::string& filePath, TextureType type);
+	Texture(std::string& filePath, TextureType type, bool loadSRGB = false);
 	void Bind(const ShaderProgram* program);
 
 private:
