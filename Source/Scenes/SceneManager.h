@@ -25,10 +25,10 @@ private:
 	void SetupModelTextureScene();
 	
 	std::vector<std::string> modelPaths;
-	std::array<std::string, 5> modelFileFilters
+	std::array<std::string, 6> modelFileFilters
 	{
 		".bin", ".jpg", ".jpeg", ".png",
-		".md"
+		".md", ".txt"
 	};
 
 	std::vector<std::string> texturePaths;
