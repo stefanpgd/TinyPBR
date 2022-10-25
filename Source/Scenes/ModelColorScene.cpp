@@ -7,7 +7,7 @@
 
 ModelColorScene::ModelColorScene(std::string& filePath)
 {
-	shaderProgram = new ShaderProgram("triangle.vert", "SphereColor.frag");
+	shaderProgram = new ShaderProgram("triangle.vert", "ModelColor.frag");
 	models.push_back(new Model(filePath));
 }
 
@@ -16,6 +16,8 @@ void ModelColorScene::Update()
 	ImGui::Begin("Scene Settings");
 	ImGui::ColorPicker3("Sphere Color", &modelColor[0]);
 	ImGui::End();
+
+	models[0]->Update();
 }
 
 void ModelColorScene::Draw(Camera* camera)

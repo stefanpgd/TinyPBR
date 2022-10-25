@@ -42,6 +42,11 @@ Model::Model(const std::string& filePath)
 	ProcessNode(scene->mRootNode, scene);
 }
 
+void Model::Update()
+{
+	transform.DebugDrawImGui();
+}
+
 void Model::Draw(ShaderProgram* shaderProgram)
 {
 	shaderProgram->SetMat4("ModelMatrix", transform.GetModelMatrix());

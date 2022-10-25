@@ -7,7 +7,7 @@
 
 SphereColorScene::SphereColorScene()
 {
-	shaderProgram = new ShaderProgram("triangle.vert", "SphereColor.frag");
+	shaderProgram = new ShaderProgram("triangle.vert", "ModelColor.frag");
 	models.push_back(new Model("Resources/Models/Sphere/sphere.gltf"));
 }
 

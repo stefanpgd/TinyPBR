@@ -18,6 +18,7 @@ class Model
 public:
 	Model(const std::string& filePath);
 	
+	void Update();
 	void Draw(ShaderProgram* shaderProgram);
 
 private:

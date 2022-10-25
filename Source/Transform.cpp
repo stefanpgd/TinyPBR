@@ -22,11 +22,11 @@ void Transform::DebugDrawImGui()
 	ImGui::Text("Transform:");
 	ImGui::PopFont();
 
-	DrawVector3Edit("Position", Position, 0.0f);
+	DrawVector3Edit("Position", Position, 0.0f, 0.001f);
 	ImGui::Spacing();
-	DrawVector3Edit("Rotation", Rotation, 0.0f);
+	DrawVector3Edit("Rotation", Rotation, 0.0f, 0.1f);
 	ImGui::Spacing();
-	DrawVector3Edit("Scale", Scale, 1.0f);
+	DrawVector3Edit("Scale", Scale, 1.0f, 0.01f);
 	ImGui::End();
 }
 
