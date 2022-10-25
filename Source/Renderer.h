@@ -17,8 +17,8 @@ public:
 
 private:
 	bool isRunning = true;
-	unsigned int windowWidth = 1080;
-	unsigned int windowHeight = 720;
+	unsigned int windowWidth = 1920;
+	unsigned int windowHeight = 1080;
 
 	Camera* camera;
 	SceneManager* sceneManager;

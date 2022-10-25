@@ -16,13 +16,16 @@ enum aiTextureType;
 class Model
 {
 public:
-	Model(const std::string& filePath);
+	Model(const std::string& filePath, bool loadTextures = false);
 	
 	void Update();
 	void Draw(ShaderProgram* shaderProgram);
 
 private:
 	void ProcessNode(aiNode* node, const aiScene* scene);
+
+	std::string filePath;
+	bool loadBoundTextures;
 
 	Transform transform;
 	std::vector<Mesh*> meshes;

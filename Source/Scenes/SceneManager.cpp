@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <filesystem>
 #include "ModelColorScene.h"
+#include "ModelTextureScene.h"
 
 SceneManager::SceneManager()
 {
@@ -25,6 +26,12 @@ void SceneManager::Update()
 	{
 		pickScenePopup = true;
 		activeScene = nullptr;
+	}
+
+	if(ImGui::Button("Refresh Model & Texture paths"))
+	{
+		GatherAllModelPaths(modelPaths, "Resources/Models", "Resources/Models");
+		GatherAllTexturePaths(texturePaths, "Resources/Textures", "Resources/Textures");
 	}
 	ImGui::EndMainMenuBar();
 }
@@ -60,6 +67,13 @@ void SceneManager::PickScene()
 				ImGui::CloseCurrentPopup();
 			}
 
+			if(ImGui::Button("Model Texture"))
+			{
+				pickScenePopup = false;
+				modelTextureSceneSetup = true;
+				ImGui::CloseCurrentPopup();
+			}
+
 			ImGui::EndPopup();
 		}
 	}
@@ -67,6 +81,11 @@ void SceneManager::PickScene()
 	if(modelColorSceneSetup)
 	{
 		SetupModelColorScene();
+	}
+
+	if(modelTextureSceneSetup)
+	{
+		SetupModelTextureScene();
 	}
 }
 
@@ -136,6 +155,45 @@ void SceneManager::SetupModelColorScene()
 			std::string filePath = "Resources/Models" + modelPaths[selectedModel];
 			activeScene = new ModelColorScene(filePath);
 			modelColorSceneSetup = false;
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::EndPopup();
+	}
+}
+
+void SceneManager::SetupModelTextureScene()
+{
+	ImGui::OpenPopup("Setup Scene");
+
+	if(ImGui::BeginPopupModal("Setup Scene"))
+	{
+		ImGui::Text("Pick a preferred model");
+
+		if(ImGui::BeginCombo("Models", modelPaths[selectedModel].c_str()))
+		{
+			for(int i = 0; i < modelPaths.size(); i++)
+			{
+				bool isSelected = (modelPaths[selectedModel] == modelPaths[i]);
+				if(ImGui::Selectable(modelPaths[i].c_str(), isSelected))
+				{
+					selectedModel = i;
+				}
+
+				if(isSelected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+
+			ImGui::EndCombo();
+		}
+
+		if(ImGui::Button("Load Scene"))
+		{
+			std::string filePath = "Resources/Models" + modelPaths[selectedModel];
+			activeScene = new ModelTextureScene(filePath);
+			modelTextureSceneSetup = false;
 			ImGui::CloseCurrentPopup();
 		}
 

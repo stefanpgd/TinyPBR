@@ -7,8 +7,11 @@
 #include <assimp/postprocess.h>
 #include <cassert>
 
-Model::Model(const std::string& filePath)
+Model::Model(const std::string& filePath, bool loadTextures)
 {
+	this->filePath = filePath;
+	loadBoundTextures = loadTextures;
+
 	Assimp::Importer import;
 	unsigned int processFlags =
 		aiProcess_CalcTangentSpace | // calculate tangents and bitangents if possible
@@ -63,7 +66,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
 	{
 		aiMesh* meshData = scene->mMeshes[node->mMeshes[i]];
 
-		Mesh* newMesh = new Mesh(meshData);
+		Mesh* newMesh = new Mesh(meshData, scene, filePath, loadBoundTextures);
 		meshes.push_back(newMesh);
 	}
 

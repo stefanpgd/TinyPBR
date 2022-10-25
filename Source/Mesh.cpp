@@ -5,8 +5,10 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
-Mesh::Mesh(aiMesh* mesh)
+Mesh::Mesh(aiMesh* mesh, const aiScene* scene, std::string& modelFilePath, bool loadTextures)
 {
+	this->modelFilePath = modelFilePath;
+
 	vertexData.resize(mesh->mNumVertices);
 
 	for(unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -38,6 +40,11 @@ Mesh::Mesh(aiMesh* mesh)
 		}
 	}
 
+	if(loadTextures)
+	{
+		ProcessMaterials(mesh, scene);
+	}
+
 	SetupBuffers();
 	indicesCount = indexData.size();
 	vertexData.clear();
@@ -46,8 +53,29 @@ Mesh::Mesh(aiMesh* mesh)
 
 void Mesh::Draw(ShaderProgram* shaderProgram)
 {
+	for(int i = 0; i < textures.size(); i++)
+	{
+		textures[i]->Bind(shaderProgram);
+	}
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+}
+
+void Mesh::ProcessMaterials(aiMesh* mesh, const aiScene* scene)
+{
+	if(mesh->mMaterialIndex >= 0)
+	{
+		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		LoadTexture(material, TextureType::Albedo);
+		LoadTexture(material, TextureType::MetalicRoughness);
+		LoadTexture(material, TextureType::Normal);
+		LoadTexture(material, TextureType::AmbientOcclusion);
+	}
+	else
+	{
+		printf("Warning: You're trying to load in textures from a model that doesn't have any materials/textures bound to it.\n");
+	}
 }
 
 void Mesh::SetupBuffers()
@@ -79,4 +107,50 @@ void Mesh::SetupBuffers()
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void*)(sizeof(float) * 8));
 
 	glBindVertexArray(0);
+}
+
+void Mesh::LoadTexture(aiMaterial* material, TextureType type)
+{
+	aiTextureType textureType;
+	bool loadSRGB = false;
+
+	switch(type)
+	{
+	case TextureType::Albedo:
+		textureType = aiTextureType_DIFFUSE;
+		loadSRGB = true;
+		break;
+
+	case TextureType::MetalicRoughness:
+		textureType = aiTextureType_DIFFUSE_ROUGHNESS;
+		break;
+
+	case TextureType::Normal:
+		textureType = aiTextureType_NORMALS;
+		break;
+
+	case TextureType::AmbientOcclusion:
+		textureType = aiTextureType_AMBIENT_OCCLUSION;
+		break;
+
+	case TextureType::Emissive:
+		textureType = aiTextureType_EMISSIVE;
+		break;
+	}
+
+	if(material->GetTextureCount(textureType) > 0)
+	{
+		aiString str;
+		material->GetTexture(textureType, 0, &str);
+
+		std::string folder = modelFilePath.substr(0, modelFilePath.find_last_of("\\"));
+		std::string path = folder + "/" + str.C_Str();
+
+		Texture* texture = new Texture(path, type, loadSRGB);
+		textures.push_back(texture);
+	}
+	else
+	{
+		printf("This model doesn't have this texture type bound to it\n");
+	}
 }

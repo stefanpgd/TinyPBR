@@ -99,6 +99,8 @@ void Renderer::Setup()
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
 	glEnable(GL_DEPTH_TEST);
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glEnable(GL_MULTISAMPLE);
 }
 
 void Renderer::StartFrame()

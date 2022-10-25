@@ -156,6 +156,7 @@
     <ClCompile Include="Dependencies\STB\stb_image.cpp" />
     <ClCompile Include="Dependencies\STB\stb_image_write.cpp" />
     <ClCompile Include="Source\Scenes\ModelColorScene.cpp" />
+    <ClCompile Include="Source\Scenes\ModelTextureScene.cpp" />
     <ClCompile Include="Source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
@@ -181,6 +182,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scenes\ModelTextureScene.h" />
     <ClInclude Include="Source\Scenes\ModelColorScene.h" />
     <ClInclude Include="Source\Scenes\Scene.h" />
     <ClInclude Include="Source\Scenes\SceneManager.h" />
@@ -209,6 +211,7 @@
     <CopyFileToFolders Include="Dependencies\Assimp\lib\assimp-vc143-mt.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
+    <None Include="Source\Shaders\ModelTexture.frag" />
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\ModelColor.frag" />

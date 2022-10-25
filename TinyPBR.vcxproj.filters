@@ -78,6 +78,9 @@
     <ClCompile Include="Source\Scenes\ModelColorScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scenes\ModelTextureScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll" />
@@ -153,6 +156,9 @@
     <ClInclude Include="Source\Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scenes\ModelTextureScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\triangle.vert" />
@@ -160,5 +166,6 @@
     <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\ModelColor.frag" />
+    <None Include="Source\Shaders\ModelTexture.frag" />
   </ItemGroup>
 </Project>

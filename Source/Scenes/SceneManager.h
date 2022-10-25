@@ -22,6 +22,7 @@ private:
 
 	// Scene setups //
 	void SetupModelColorScene();
+	void SetupModelTextureScene();
 	
 	std::vector<std::string> modelPaths;
 	std::array<std::string, 5> modelFileFilters
@@ -39,4 +40,5 @@ private:
 
 	bool pickScenePopup = true;
 	bool modelColorSceneSetup = false;
+	bool modelTextureSceneSetup = false;
 };
