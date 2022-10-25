@@ -6,6 +6,7 @@
 class ShaderProgram;
 class Camera;
 class Model;
+class SceneManager;
 
 class Renderer
 {
@@ -16,13 +17,12 @@ public:
 
 private:
 	bool isRunning = true;
-	GLFWwindow* window;
 	unsigned int windowWidth = 1080;
 	unsigned int windowHeight = 720;
 
 	Camera* camera;
-	ShaderProgram* shaderProgram;
-	Model* model;
+	SceneManager* sceneManager;
+	GLFWwindow* window;
 
 	void Setup();
 	void StartFrame();

@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\STB\stb_image.cpp" />
     <ClCompile Include="Dependencies\STB\stb_image_write.cpp" />
+    <ClCompile Include="Source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
+    <ClCompile Include="Source\Scenes\SphereColorScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll">
@@ -176,6 +178,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scenes\Scene.h" />
+    <ClInclude Include="Source\Scenes\SceneManager.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Dependencies\STB\stb_image.h" />
@@ -194,6 +198,7 @@
     <ClInclude Include="Source\Renderer.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
+    <ClInclude Include="Source\Scenes\SphereColorScene.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\Assimp\lib\assimp-vc143-mt.dll">
@@ -201,6 +206,7 @@
     </CopyFileToFolders>
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\pbr.vert" />
+    <None Include="Source\Shaders\SphereColor.frag" />
     <None Include="Source\Shaders\triangle.frag" />
     <None Include="Source\Shaders\triangle.vert" />
   </ItemGroup>

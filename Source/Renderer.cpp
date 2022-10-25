@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Camera.h"
 #include "ShaderProgram.h"
+#include "Scenes/SceneManager.h"
 
 #include <stb_image_write.h>
 #include <iostream>
@@ -31,7 +32,6 @@ Renderer::Renderer()
 
 	window = glfwCreateWindow(windowWidth, windowHeight, "TinyPBR", NULL, NULL);
 	glfwMakeContextCurrent(window);
-	//glfwSwapInterval(1); // Enable vsync
 
 	// Initialize GLAD // 
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -95,8 +95,7 @@ void Renderer::Run()
 
 void Renderer::Setup()
 {
-	model = new Model("Resources/Models/ChessGame/ABeautifulGame.gltf");
-	shaderProgram = new ShaderProgram("triangle.vert", "triangle.frag");
+	sceneManager = new SceneManager();
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
 	glEnable(GL_DEPTH_TEST);
@@ -115,6 +114,8 @@ void Renderer::StartFrame()
 
 void Renderer::Update(float deltaTime)
 {
+	sceneManager->Update();
+
 	ProcessInput(window);
 	camera->Update(window, deltaTime);
 	camera->DebugDrawImGui();
@@ -122,10 +123,7 @@ void Renderer::Update(float deltaTime)
 
 void Renderer::Draw()
 {
-	shaderProgram->Bind();
-	shaderProgram->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
-
-	model->Draw(shaderProgram);
+	sceneManager->Draw(camera);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
