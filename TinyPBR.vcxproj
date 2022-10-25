@@ -203,6 +203,7 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Transform.h" />
     <ClInclude Include="Source\Scenes\SphereColorScene.h" />
+    <ClInclude Include="Source\Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\Assimp\lib\assimp-vc143-mt.dll">

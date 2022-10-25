@@ -74,7 +74,7 @@ ShaderProgram::ShaderProgram(const std::string& vertexName, const std::string& f
 	if(!success)
 	{
 		glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
-		std::cout << "Error: shader vertex compilation failed: " << infoLog << std::endl;
+		std::cout << "Error: shader fragment compilation failed: " << infoLog << std::endl;
 		throw std::runtime_error("Error: Fragment shader compilation FAILED");
 	}
 

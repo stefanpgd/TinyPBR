@@ -15,5 +15,5 @@ void main()
 	gl_Position = VPMatrix * ModelMatrix * vec4(aPos, 1.0);
 	WorldPosition = mat3(ModelMatrix) * aPos;
 	TextureCoord = aTexCoord;
-	Normal = aNormal;
+	Normal = mat3(transpose(inverse(ModelMatrix))) * aNormal;  
 }

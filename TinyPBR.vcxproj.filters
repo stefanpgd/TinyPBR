@@ -150,6 +150,9 @@
     <ClInclude Include="Source\Scenes\ModelColorScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\triangle.vert" />

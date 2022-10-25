@@ -24,9 +24,10 @@ private:
 	void SetupModelColorScene();
 	
 	std::vector<std::string> modelPaths;
-	std::array<std::string, 4> modelFileFilters
+	std::array<std::string, 5> modelFileFilters
 	{
-		".bin", ".jpg", ".jpeg", ".png"
+		".bin", ".jpg", ".jpeg", ".png",
+		".md"
 	};
 
 	std::vector<std::string> texturePaths;
