@@ -9,7 +9,9 @@ enum class TextureType
 	Normal,
 	MetalicRoughness,
 	AmbientOcclusion,
-	Emissive
+	Emissive,
+	Metallic,
+	Roughness
 };
 
 class Texture
@@ -26,12 +28,14 @@ private:
 	int channels;
 	unsigned char* buffer;
 
-	std::string bindNames[5]
+	std::string bindNames[7]
 	{
 		"texture_albedo",
 		"texture_normal",
 		"texture_mr",
 		"texture_ao",
-		"texture_emissive"
+		"texture_emissive",
+		"texture_metallic",
+		"texture_rougness"
 	};
 };

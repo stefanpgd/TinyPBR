@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\STB\stb_image.cpp" />
     <ClCompile Include="Dependencies\STB\stb_image_write.cpp" />
+    <ClCompile Include="Source\Scenes\ModelSelectTextureScene.cpp" />
     <ClCompile Include="Source\Scenes\ModelColorScene.cpp" />
     <ClCompile Include="Source\Scenes\ModelTextureScene.cpp" />
     <ClCompile Include="Source\Scenes\SceneManager.cpp" />
@@ -182,6 +183,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scenes\ModelSelectTextureScene.h" />
     <ClInclude Include="Source\Scenes\ModelTextureScene.h" />
     <ClInclude Include="Source\Scenes\ModelColorScene.h" />
     <ClInclude Include="Source\Scenes\Scene.h" />
@@ -212,6 +214,7 @@
       <FileType>Document</FileType>
     </CopyFileToFolders>
     <None Include="Source\Shaders\ModelTexture.frag" />
+    <None Include="Source\Shaders\ModelTextureSelect.frag" />
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\ModelColor.frag" />

@@ -53,31 +53,43 @@ void SceneManager::PickScene()
 		{
 			ImGui::Text("Pick a preferred scene");
 
-			if(ImGui::Button("Sphere Color"))
+			if(ImGui::Button("Sphere - Select Color"))
 			{
 				pickScenePopup = false;
 				activeScene = &sphereColorScene;
 				ImGui::CloseCurrentPopup();
 			}
 
-			if(ImGui::Button("Model Color"))
+			if(ImGui::Button("Model - Select Color"))
 			{
 				pickScenePopup = false;
 				modelColorSceneSetup = true;
 				ImGui::CloseCurrentPopup();
 			}
 
-			if(ImGui::Button("Model Texture"))
+			if(ImGui::Button("Model - Load Textures"))
 			{
 				pickScenePopup = false;
 				modelTextureSceneSetup = true;
 				ImGui::CloseCurrentPopup();
 			}
 
+			if(ImGui::Button("Model - Select Textures"))
+			{
+				pickScenePopup = false;
+				modelSelectTextureSceneSetup = true;
+				selectedAlbedo = texturePaths.size() - 1;
+				selectedNormal = texturePaths.size() - 1;
+				selectedMetallic = texturePaths.size() - 1;
+				selectedRoughness = texturePaths.size() - 1;
+				selectedAO = texturePaths.size() - 1;
+				ImGui::CloseCurrentPopup();
+			}
+
 			ImGui::EndPopup();
 		}
 	}
-	
+
 	if(modelColorSceneSetup)
 	{
 		SetupModelColorScene();
@@ -86,6 +98,11 @@ void SceneManager::PickScene()
 	if(modelTextureSceneSetup)
 	{
 		SetupModelTextureScene();
+	}
+
+	if(modelSelectTextureSceneSetup)
+	{
+		SetupModelSelectScene();
 	}
 }
 
@@ -121,6 +138,20 @@ void SceneManager::GatherAllModelPaths(std::vector<std::string>& files, std::str
 
 void SceneManager::GatherAllTexturePaths(std::vector<std::string>& files, std::string path, std::string originalPath)
 {
+	for(const auto& file : std::filesystem::directory_iterator(path))
+	{
+		if(file.is_directory())
+		{
+			GatherAllTexturePaths(files, file.path().string(), originalPath);
+			continue;
+		}
+
+		std::string filePath = file.path().string();
+		filePath.erase(0, originalPath.size());
+		std::string fileType = strrchr(filePath.c_str(), '.');
+
+		texturePaths.push_back(filePath);
+	}
 }
 
 void SceneManager::SetupModelColorScene()
@@ -170,24 +201,7 @@ void SceneManager::SetupModelTextureScene()
 	{
 		ImGui::Text("Pick a preferred model");
 
-		if(ImGui::BeginCombo("Models", modelPaths[selectedModel].c_str()))
-		{
-			for(int i = 0; i < modelPaths.size(); i++)
-			{
-				bool isSelected = (modelPaths[selectedModel] == modelPaths[i]);
-				if(ImGui::Selectable(modelPaths[i].c_str(), isSelected))
-				{
-					selectedModel = i;
-				}
-
-				if(isSelected)
-				{
-					ImGui::SetItemDefaultFocus();
-				}
-			}
-
-			ImGui::EndCombo();
-		}
+		ShowOptionList("Model", modelPaths, selectedModel);
 
 		if(ImGui::Button("Load Scene"))
 		{
@@ -198,5 +212,86 @@ void SceneManager::SetupModelTextureScene()
 		}
 
 		ImGui::EndPopup();
+	}
+}
+
+void SceneManager::SetupModelSelectScene()
+{
+	ImGui::OpenPopup("Setup Scene");
+
+	if(ImGui::BeginPopupModal("Setup Scene"))
+	{
+		ImGui::Text("Select a model:");
+		ShowOptionList("Model", modelPaths, selectedModel);
+
+		ImGui::Separator();
+
+		if(texturePaths.size() > 0)
+		{
+			ImGui::Text("Select the textures you want to use.");
+			ImGui::Text("If you're missing a type, just leave it to 'None'");
+
+			ShowOptionList("Albedo", texturePaths, selectedAlbedo);
+			ShowOptionList("Normal", texturePaths, selectedNormal);
+			ShowOptionList("Metallic", texturePaths, selectedMetallic);
+			ShowOptionList("Roughness", texturePaths, selectedRoughness);
+			ShowOptionList("Ambient Occlusion", texturePaths, selectedAO);
+
+			ImGui::Separator();
+			ImGui::Text("Since some textures might be multiple types in one ( ORM, MR enc. )");
+			ImGui::Text("Select the channels that will be used:");
+			ShowOptionList("Metallic Channel", rgbChannels, modelSelectData.metallicChannel);
+			ShowOptionList("Roughness Channel", rgbChannels, modelSelectData.roughnessChannel);
+			ShowOptionList("Ambient Occlusion Channel", rgbChannels, modelSelectData.aoChannel);
+
+			if(ImGui::Button("Load Scene"))
+			{
+				std::string filePath = "Resources/Models" + modelPaths[selectedModel];
+				std::string texturePrefix = "Resources/Textures";
+
+				modelSelectData.modelPath = filePath;
+				modelSelectData.albedoPath = texturePrefix + texturePaths[selectedAlbedo];
+				modelSelectData.normalPath = texturePrefix + texturePaths[selectedNormal];
+				modelSelectData.metallicPath = texturePrefix + texturePaths[selectedMetallic];
+				modelSelectData.roughnessPath = texturePrefix + texturePaths[selectedRoughness];
+				modelSelectData.ambientOcclusionPath = texturePrefix + texturePaths[selectedAO];
+
+				activeScene = new ModelSelectTextureScene(modelSelectData);
+				modelSelectTextureSceneSetup = false;
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		else
+		{
+			ImGui::Text("You've no textures in the 'Resources/Textures' folder");
+			ImGui::Text("So the scene can't be loaded.");
+		}
+
+		ImGui::EndPopup();
+	}
+}
+
+void SceneManager::ShowOptionList(std::string name, std::vector<std::string> listContent, unsigned int& selectedID)
+{
+	if(listContent.size() > 0)
+	{
+		if(ImGui::BeginCombo(name.c_str(), listContent[selectedID].c_str()))
+		{
+			for(int i = 0; i < listContent.size(); i++)
+			{
+				bool isSelected = (listContent[selectedID] == listContent[i]);
+				if(ImGui::Selectable(listContent[i].c_str(), isSelected))
+				{
+					selectedID = i;
+				}
+
+				if(isSelected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+
+			ImGui::EndCombo();
+		}
 	}
 }
