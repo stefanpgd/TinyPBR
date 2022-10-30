@@ -55,7 +55,6 @@ void SceneManager::PickScene()
 		ImGui::OpenPopup("Pick A Scene");
 
 		ImGui::SetNextWindowPos(ImVec2(5, 55));
-		ImGui::SetWindowSize(ImVec2(500, 500));
 		if(ImGui::BeginPopupModal("Pick A Scene"))
 		{
 			ImGui::PushFont(boldFont);

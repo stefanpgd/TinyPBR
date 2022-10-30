@@ -31,6 +31,7 @@ public:
 private:
 	ModelSelectTextureData modelData;
 
+	ShaderProgram* activeShader;
 	std::vector<Texture*> textures;
 
 	glm::vec2 texCoordMultiplier = glm::vec2(1.0f, 1.0f);

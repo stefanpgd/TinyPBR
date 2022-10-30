@@ -12,6 +12,8 @@ public:
 	virtual void Draw(Camera* camera) override;
 
 private:
+	ShaderProgram* activeShader;
+
 	glm::vec3 lightPositions[3];
 	glm::vec3 lightColors[3];
 	float lightIntensities[3];

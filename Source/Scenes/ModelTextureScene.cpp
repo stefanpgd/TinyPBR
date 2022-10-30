@@ -9,6 +9,8 @@
 ModelTextureScene::ModelTextureScene(std::string& filePath)
 {
 	shaderProgram = new ShaderProgram("triangle.vert", "ModelTexture.frag");
+	channelViewProgram = new ShaderProgram("triangle.vert", "TextureViewMode.frag");
+
 	models.push_back(new Model(filePath, true));
 	
 	for(int i = 0; i < 3; i++)
@@ -30,8 +32,6 @@ void ModelTextureScene::Update()
 	ImGui::Begin("Scene Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::Text("Light Settings:");
 
-	ImGui::ShowDemoWindow();
-
 	for(int i = 0; i < 3; i++)
 	{
 		std::string text = "Light - " + std::to_string(i);
@@ -52,19 +52,32 @@ void ModelTextureScene::Update()
 
 void ModelTextureScene::Draw(Camera* camera)
 {
-	shaderProgram->Bind();
-	shaderProgram->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
-	shaderProgram->SetVec3("CameraPosition", camera->GetPosition());
+	// Check if we want to view a specific channel, if so, bind the channelViewProgram
+	if(ChannelViewMode())
+	{
+		activeShader = channelViewProgram;
+		activeShader->Bind();
+		activeShader->SetBool("texturesBoundToModel", true);
+		activeShader->SetInt("viewMode", currentChannel);
+	}
+	else
+	{
+		activeShader = shaderProgram;
+		activeShader->Bind();
+	}
+
+	activeShader->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
+	activeShader->SetVec3("CameraPosition", camera->GetPosition());
 
 	for(int i = 0; i < 3; i++)
 	{
-		shaderProgram->SetVec3("lightPosition[" + std::to_string(i) + "]", lightPositions[i]);
-		shaderProgram->SetVec3("lightColor[" + std::to_string(i) + "]", lightColors[i]);
-		shaderProgram->SetFloat("lightIntensity[" + std::to_string(i) + "]", lightIntensities[i]);
+		activeShader->SetVec3("lightPosition[" + std::to_string(i) + "]", lightPositions[i]);
+		activeShader->SetVec3("lightColor[" + std::to_string(i) + "]", lightColors[i]);
+		activeShader->SetFloat("lightIntensity[" + std::to_string(i) + "]", lightIntensities[i]);
 	}
 
 	for(int i = 0; i < models.size(); i++)
 	{
-		models[i]->Draw(shaderProgram);
+		models[i]->Draw(activeShader);
 	}
 }

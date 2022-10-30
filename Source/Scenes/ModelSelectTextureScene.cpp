@@ -10,6 +10,7 @@ ModelSelectTextureScene::ModelSelectTextureScene(ModelSelectTextureData data)
 {
 	modelData = data;
 	shaderProgram = new ShaderProgram("triangle.vert", "ModelTextureSelect.frag");
+	channelViewProgram = new ShaderProgram("triangle.vert", "TextureViewMode.frag");
 	models.push_back(new Model(data.modelPath, false));
 
 	for(int i = 0; i < 3; i++)
@@ -61,28 +62,41 @@ void ModelSelectTextureScene::Update()
 
 void ModelSelectTextureScene::Draw(Camera* camera)
 {
-	shaderProgram->Bind();
-	shaderProgram->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
-	shaderProgram->SetVec3("CameraPosition", camera->GetPosition());
-	shaderProgram->SetInt("metallicChannel", modelData.metallicChannel);
-	shaderProgram->SetInt("roughnessChannel", modelData.roughnessChannel);
-	shaderProgram->SetInt("aoChannel", modelData.aoChannel);
-	shaderProgram->SetVec2("texMultiplier", texCoordMultiplier);
+	// Check if we want to view a specific channel, if so, bind the channelViewProgram
+	if(ChannelViewMode())
+	{
+		activeShader = channelViewProgram;
+		activeShader->Bind();
+		activeShader->SetBool("texturesBoundToModel", false);
+		activeShader->SetInt("viewMode", currentChannel);
+	}
+	else
+	{
+		activeShader = shaderProgram;
+		activeShader->Bind();
+	}
+
+	activeShader->SetMat4("VPMatrix", camera->GetViewProjectionMatrix());
+	activeShader->SetVec3("CameraPosition", camera->GetPosition());
+	activeShader->SetInt("metallicChannel", modelData.metallicChannel);
+	activeShader->SetInt("roughnessChannel", modelData.roughnessChannel);
+	activeShader->SetInt("aoChannel", modelData.aoChannel);
+	activeShader->SetVec2("texMultiplier", texCoordMultiplier);
 
 	for(int i = 0; i < 3; i++)
 	{
-		shaderProgram->SetVec3("lightPosition[" + std::to_string(i) + "]", lightPositions[i]);
-		shaderProgram->SetVec3("lightColor[" + std::to_string(i) + "]", lightColors[i]);
-		shaderProgram->SetFloat("lightIntensity[" + std::to_string(i) + "]", lightIntensities[i]);
+		activeShader->SetVec3("lightPosition[" + std::to_string(i) + "]", lightPositions[i]);
+		activeShader->SetVec3("lightColor[" + std::to_string(i) + "]", lightColors[i]);
+		activeShader->SetFloat("lightIntensity[" + std::to_string(i) + "]", lightIntensities[i]);
 	}
 
 	for(int i = 0; i < textures.size(); i++)
 	{
-		textures[i]->Bind(shaderProgram);
+		textures[i]->Bind(activeShader);
 	}
 
 	for(int i = 0; i < models.size(); i++)
 	{
-		models[i]->Draw(shaderProgram);
+		models[i]->Draw(activeShader);
 	}
 }

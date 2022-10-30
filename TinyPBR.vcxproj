@@ -158,6 +158,7 @@
     <ClCompile Include="Source\Scenes\ModelSelectTextureScene.cpp" />
     <ClCompile Include="Source\Scenes\ModelColorScene.cpp" />
     <ClCompile Include="Source\Scenes\ModelTextureScene.cpp" />
+    <ClCompile Include="Source\Scenes\Scene.cpp" />
     <ClCompile Include="Source\Scenes\SceneManager.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
@@ -218,6 +219,7 @@
     <None Include="Source\Shaders\pbr.frag" />
     <None Include="Source\Shaders\pbr.vert" />
     <None Include="Source\Shaders\ModelColor.frag" />
+    <None Include="Source\Shaders\TextureViewMode.frag" />
     <None Include="Source\Shaders\triangle.frag" />
     <None Include="Source\Shaders\triangle.vert" />
   </ItemGroup>

@@ -84,6 +84,9 @@
     <ClCompile Include="Source\Scenes\ModelSelectTextureScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scenes\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Dependencies\GLFW\lib\glfw3.dll" />
@@ -174,5 +177,6 @@
     <None Include="Source\Shaders\ModelColor.frag" />
     <None Include="Source\Shaders\ModelTexture.frag" />
     <None Include="Source\Shaders\ModelTextureSelect.frag" />
+    <None Include="Source\Shaders\TextureViewMode.frag" />
   </ItemGroup>
 </Project>
