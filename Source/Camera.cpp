@@ -20,7 +20,9 @@ void Camera::Update(GLFWwindow* window, float deltaTime)
 
 void Camera::DebugDrawImGui()
 {
-	ImGui::Begin("Camera Settings");
+	ImGui::SetNextWindowPos(ImVec2(0, 170));
+	ImGui::SetNextWindowSize(ImVec2(350, 170));
+	ImGui::Begin("Camera Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::DragFloat3("Position", &position[0], 0.01f);
 	ImGui::DragFloat("Movement Speed", &cameraMovespeed, 0.25f, 0.0f);
 

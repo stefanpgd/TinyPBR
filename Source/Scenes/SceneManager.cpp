@@ -3,6 +3,7 @@
 #include <filesystem>
 #include "ModelColorScene.h"
 #include "ModelTextureScene.h"
+#include "../Camera.h"
 
 SceneManager::SceneManager()
 {
@@ -46,34 +47,62 @@ void SceneManager::Draw(Camera* camera)
 
 void SceneManager::PickScene()
 {
+	ImGuiIO& io = ImGui::GetIO();
+	auto boldFont = io.Fonts->Fonts[1];
+
 	if(pickScenePopup)
 	{
 		ImGui::OpenPopup("Pick A Scene");
+
+		ImGui::SetNextWindowPos(ImVec2(5, 55));
+		ImGui::SetWindowSize(ImVec2(500, 500));
 		if(ImGui::BeginPopupModal("Pick A Scene"))
 		{
+			ImGui::PushFont(boldFont);
 			ImGui::Text("Pick a preferred scene");
+			ImGui::PopFont();
 
-			if(ImGui::Button("Sphere - Select Color"))
+			ImGui::Separator();
+			ImGui::Text("Loads in a sphere and gives the user material\nproperties like 'Color' to manipulate .");
+			ImGui::PushFont(boldFont);
+			if(ImGui::Button("Sphere - Simple Color"))
 			{
 				pickScenePopup = false;
 				activeScene = &sphereColorScene;
 				ImGui::CloseCurrentPopup();
 			}
+			ImGui::PopFont();
 
-			if(ImGui::Button("Model - Select Color"))
+			ImGui::Separator();
+			ImGui::Text("Be able to select a model located in 'Resources/Models' to be loaded in.");
+			ImGui::Text("Then this model will be loaded without any textures and will be shaded using");
+			ImGui::Text("properties that can be changed by the user.");
+			ImGui::PushFont(boldFont);
+			if(ImGui::Button("Model - Simple Color"))
 			{
 				pickScenePopup = false;
 				modelColorSceneSetup = true;
 				ImGui::CloseCurrentPopup();
 			}
+			ImGui::PopFont();
 
+			ImGui::Separator();
+			ImGui::Text("Be able to select a model located in 'Resources/Models' to be loaded in");
+			ImGui::Text("together with all textures bound to it in the model file.");
+			ImGui::PushFont(boldFont);
 			if(ImGui::Button("Model - Load Textures"))
 			{
 				pickScenePopup = false;
 				modelTextureSceneSetup = true;
 				ImGui::CloseCurrentPopup();
 			}
+			ImGui::PopFont();
 
+			ImGui::Separator();
+			ImGui::Text("Be able to select a model located in 'Resources/Models' to be loaded in.");
+			ImGui::Text("You will also be able to select a texture per texture type.");
+			ImGui::Text("Select this if you want to test (PBR) textures that can be used on any model");
+			ImGui::PushFont(boldFont);
 			if(ImGui::Button("Model - Select Textures"))
 			{
 				pickScenePopup = false;
@@ -85,7 +114,9 @@ void SceneManager::PickScene()
 				selectedAO = texturePaths.size() - 1;
 				ImGui::CloseCurrentPopup();
 			}
+			ImGui::PopFont();
 
+			ImGui::Separator();
 			ImGui::EndPopup();
 		}
 	}

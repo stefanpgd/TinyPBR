@@ -17,7 +17,9 @@ void Transform::DebugDrawImGui()
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[1];
 
-	ImGui::Begin("Object Transform");
+	ImGui::SetNextWindowPos(ImVec2(0, 40));
+	ImGui::SetNextWindowSize(ImVec2(350, 130));
+	ImGui::Begin("Object Transform", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::PushFont(boldFont);
 	ImGui::Text("Transform:");
 	ImGui::PopFont();
@@ -80,7 +82,6 @@ void Transform::DrawVector3Edit(const std::string name, glm::vec3& data, float r
 {
 	// Credits for this function go to Yan Chernikov, a.k.a. 'The Cherno'
 	// source: https://youtu.be/oESRecjuLNY
-
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[1];
 

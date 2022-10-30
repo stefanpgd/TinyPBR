@@ -16,7 +16,10 @@ SphereColorScene::SphereColorScene()
 
 void SphereColorScene::Update()
 {
-	ImGui::Begin("Scene Settings");
+	ImGui::SetNextWindowPos(ImVec2(0, 340));
+	ImGui::SetNextWindowSize(ImVec2(350, 500));
+
+	ImGui::Begin("Scene Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::Text("Material Properties");
 	ImGui::ColorEdit3("Albedo", &albedo[0]);
 	ImGui::SliderFloat("Metalic", &metallic, 0.0f, 1.0f);

@@ -96,7 +96,7 @@ void Renderer::Run()
 void Renderer::Setup()
 {
 	sceneManager = new SceneManager();
-	camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), windowWidth, windowHeight);
 
 	glEnable(GL_DEPTH_TEST);
 	glfwWindowHint(GLFW_SAMPLES, 4);

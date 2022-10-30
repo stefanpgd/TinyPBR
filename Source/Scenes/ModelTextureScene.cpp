@@ -24,7 +24,10 @@ ModelTextureScene::ModelTextureScene(std::string& filePath)
 
 void ModelTextureScene::Update()
 {
-	ImGui::Begin("Scene Settings");
+	ImGui::SetNextWindowPos(ImVec2(0, 340));
+	ImGui::SetNextWindowSize(ImVec2(350, 500));
+
+	ImGui::Begin("Scene Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::Text("Light Settings:");
 
 	ImGui::ShowDemoWindow();
