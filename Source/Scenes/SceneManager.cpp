@@ -186,11 +186,15 @@ void SceneManager::GatherAllTexturePaths(std::vector<std::string>& files, std::s
 
 void SceneManager::SetupModelColorScene()
 {
+	ImGuiIO& io = ImGui::GetIO();
+	auto boldFont = io.Fonts->Fonts[1];
 	ImGui::OpenPopup("Setup Scene");
 
 	if(ImGui::BeginPopupModal("Setup Scene"))
 	{
-		ImGui::Text("Pick a preferred model");
+		ImGui::PushFont(boldFont);
+		ImGui::Text("Select a model:");
+		ImGui::PopFont();
 
 		if(ImGui::BeginCombo("Models", modelPaths[selectedModel].c_str()))
 		{
@@ -225,13 +229,22 @@ void SceneManager::SetupModelColorScene()
 
 void SceneManager::SetupModelTextureScene()
 {
+	ImGuiIO& io = ImGui::GetIO();
+	auto boldFont = io.Fonts->Fonts[1];
+
 	ImGui::OpenPopup("Setup Scene");
 
 	if(ImGui::BeginPopupModal("Setup Scene"))
 	{
-		ImGui::Text("Pick a preferred model");
+		ImGui::PushFont(boldFont);
+		ImGui::Text("Select a model:");
+		ImGui::PopFont();
 
 		ShowOptionList("Model", modelPaths, selectedModel);
+		ImGui::Separator();
+
+		ImGui::Text("The model that gets chosen assumes that the layout for the texture");
+		ImGui::Text("types AO, Metallic and roughness are in a ORM layout.");
 
 		if(ImGui::Button("Load Scene"))
 		{
@@ -247,11 +260,17 @@ void SceneManager::SetupModelTextureScene()
 
 void SceneManager::SetupModelSelectScene()
 {
+	ImGuiIO& io = ImGui::GetIO();
+	auto boldFont = io.Fonts->Fonts[1];
+
 	ImGui::OpenPopup("Setup Scene");
 
 	if(ImGui::BeginPopupModal("Setup Scene"))
 	{
+		ImGui::PushFont(boldFont);
 		ImGui::Text("Select a model:");
+		ImGui::PopFont();
+
 		ShowOptionList("Model", modelPaths, selectedModel);
 
 		ImGui::Separator();
