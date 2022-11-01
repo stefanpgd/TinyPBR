@@ -8,7 +8,7 @@
 - **Model | Select Texture(s)**: the user can select a model and then select textures per (PBR) texture type. Use this when you've textures that could be used on any sort of model (e.g. ground or rock textures ).
 
 ### Why did I make this?
-I made this project since I was learning about Physically Based Rendering for the first time. So I wanted a fresh environment with just a straightforward way of using it so I could test my PBR implementation and see if it worked. Afterwards once it was working I added some extra UI so I could play around with it more, basically making it a toy renderer. The project overall took around 10-20 hours of work. Mind that the code quality is quite low, this project wasn't made to be a robust or performant but to test out the things I just learned/researched :).
+I made this project since I was learning about Physically Based Rendering for the first time. So I wanted a fresh environment with just a straightforward way of using it so I could test my PBR implementation and see if it worked. Afterwards once it was working I added some extra UI so I could play around with it more, basically making it a toy renderer. The project overall took around 10-20 hours of work. Mind that the code quality is quite low, this project wasn't made to be a robust or performant but to test out the things I learned/researched.
 
 ____
 
