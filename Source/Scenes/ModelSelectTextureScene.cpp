@@ -38,8 +38,6 @@ void ModelSelectTextureScene::Update()
 	ImGui::Begin("Scene Settings", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	ImGui::Text("Light Settings:");
 
-	ImGui::ShowDemoWindow();
-
 	for(int i = 0; i < 3; i++)
 	{
 		std::string text = "Light - " + std::to_string(i);
