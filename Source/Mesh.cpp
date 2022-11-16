@@ -47,8 +47,12 @@ Mesh::Mesh(aiMesh* mesh, const aiScene* scene, std::string& modelFilePath, bool 
 
 	SetupBuffers();
 	indicesCount = indexData.size();
+
 	vertexData.clear();
+	vertexData.shrink_to_fit();
+
 	indexData.clear();
+	indexData.shrink_to_fit();
 }
 
 void Mesh::Draw(ShaderProgram* shaderProgram)
